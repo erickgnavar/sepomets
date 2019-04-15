@@ -14,10 +14,14 @@ defmodule Sepomets.Loader do
 
     file_path = Application.get_env(:sepomets, :file, @defaut_file_path)
 
-    with {:ok, file_path} <- extract_file(file_path) do
-      load_file_data(table, file_path)
-      Logger.debug(fn -> "Finish loading Sepomex data" end)
-      File.rm!(file_path)
+    case extract_file(file_path) do
+      {:ok, file_path} ->
+        load_file_data(table, file_path)
+        Logger.debug(fn -> "Finish loading Sepomex data" end)
+        File.rm!(file_path)
+
+      _ ->
+        Logger.error("Sepomex data file not found")
     end
   end
 
