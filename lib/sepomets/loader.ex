@@ -22,6 +22,7 @@ defmodule Sepomets.Loader do
 
       _ ->
         Logger.error("Sepomex data file not found")
+        {:error, :file_not_found}
     end
   end
 

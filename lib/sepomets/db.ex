@@ -38,8 +38,14 @@ defmodule Sepomets.Db do
 
   def init(_) do
     table = create_table()
-    Loader.load_file(table)
-    {:ok, table}
+
+    case Loader.load_file(table) do
+      {:error, error} ->
+        {:error, error}
+
+      _ ->
+        {:ok, table}
+    end
   end
 
   ## Helpers
