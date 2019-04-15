@@ -37,13 +37,15 @@ defmodule Sepomets.Db do
   end
 
   def init(_) do
-    {:ok, {:not_loaded, create_table()}, {:continue, :load_file}}
-  end
+    table = create_table()
 
-  @impl true
-  def handle_continue(:load_file, {_, table}) do
-    Loader.load_file(table)
-    {:noreply, {:ok, table}}
+    case Loader.load_file(table) do
+      {:error, error} ->
+        {:error, error}
+
+      _ ->
+        {:ok, table}
+    end
   end
 
   ## Helpers

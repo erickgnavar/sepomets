@@ -12,6 +12,6 @@ defmodule Sepomets.App do
       worker(Sepomets.Db, [@env])
     ]
 
-    {:ok, _} = Supervisor.start_link(children, strategy: :one_for_one)
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 end
