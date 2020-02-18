@@ -10,7 +10,8 @@ defmodule Sepomets.PostalCodeData do
     :municipality,
     :state,
     :city,
-    :zone
+    :zone,
+    :office
   ]
 
   [
@@ -38,7 +39,7 @@ defmodule Sepomets.PostalCodeData do
       city,
       _,
       state_code,
-      _,
+      office,
       _,
       settlement_type_code,
       municipality_code,
@@ -57,7 +58,8 @@ defmodule Sepomets.PostalCodeData do
       city: %{name: city, code: city_code},
       settlement: %{name: settlement, code: settlement_code},
       settlement_type: %{name: settlement_type, code: settlement_type_code},
-      zone: zone
+      zone: zone,
+      office: office
     }
   end
 end
