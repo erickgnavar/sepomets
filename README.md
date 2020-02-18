@@ -43,3 +43,11 @@ iex> Sepomets.get("03100")
   }
 ]
 ```
+
+## Encoding
+
+El archivo por defecto se espera con el encode `latin1`. Si deseas que se lea con un encode diferente puedes especificarlo de la siguiente manera en la configuración
+
+```elixir
+config :sepomets, encode: :utf8
+```
