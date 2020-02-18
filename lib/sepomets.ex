@@ -42,7 +42,7 @@ defmodule Sepomets do
 
   ## Examples
 
-      iex> Sepomets.load("fake/path/sepomex.zip')
+      iex> Sepomets.load("fake/path/sepomex.zip")
       :ok
   """
   @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
@@ -53,7 +53,7 @@ defmodule Sepomets do
 
   ## Examples
 
-      iex> Sepomets.load_from_url("http://fakeurl/file.zip')
+      iex> Sepomets.load_from_url("http://fakeurl/file.zip")
       :ok
   """
   @spec load_from_url(String.t()) :: :ok | :file_not_found | {:error, String.t()}

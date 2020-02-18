@@ -38,8 +38,10 @@ defmodule Sepomets.Loader do
   # Carga la información del archivo de Sepomex a la tabla ETS
   @spec load_file_data(atom(), String.t()) :: :ok
   defp load_file_data(table, file_path) do
+    encoding = Application.get_env(:sepomets, :encoding, :latin1)
+
     file_path
-    |> File.stream!([{:encoding, :latin1}])
+    |> File.stream!([{:encoding, encoding}])
     |> Stream.map(&String.trim/1)
     |> Stream.drop(2)
     |> Stream.each(fn data ->

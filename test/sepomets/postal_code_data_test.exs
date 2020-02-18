@@ -15,7 +15,8 @@ defmodule Sepomets.PostalCodeDataTest do
                settlement: %{code: "0001", name: "San Ángel"},
                settlement_type: %{code: "09", name: "Colonia"},
                state: %{code: "09", name: "Ciudad de México"},
-               zone: "Urbano"
+               zone: "Urbano",
+               office: "01001"
              }
   end
 end
