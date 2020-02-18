@@ -24,7 +24,9 @@ defmodule Sepomets.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:excoveralls, "~> 0.10.6", only: :test}
+      {:excoveralls, "~> 0.10.6", only: :test},
+      {:mojito, "~> 0.6.1"},
+      {:briefly, "~> 0.3.0"}
     ]
   end
 end
