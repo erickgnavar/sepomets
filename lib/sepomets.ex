@@ -47,4 +47,15 @@ defmodule Sepomets do
   """
   @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
   defdelegate load(file_path), to: Db
+
+  @doc """
+  Carga un archivo ZIP nuevo de códigos postales de Sepomex desde una URL
+
+  ## Examples
+
+      iex> Sepomets.load_from_url("http://fakeurl/file.zip')
+      :ok
+  """
+  @spec load_from_url(String.t()) :: :ok | :file_not_found | {:error, String.t()}
+  defdelegate load_from_url(file_path), to: Db
 end

@@ -28,11 +28,30 @@ defmodule Sepomets.Db do
   """
   @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
   def load(file_path) do
-    Loader.load_file(@table, file_path)
+    GenServer.cast(__MODULE__, {:load, file_path})
+  end
+
+  @doc """
+  Carga un archivo de Sepomex desde una URL
+  """
+  @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
+  def load_from_url(url) do
+    url
+    |> Mojito.get()
+    |> case do
+      {:ok, %Mojito.Response{status_code: 200, body: body}} ->
+        path = Briefly.create!()
+        File.write!(path, body)
+        path
+
+      _ ->
+        nil
+    end
+    |> load()
   end
 
   def start_link(env) do
-    GenServer.start_link(__MODULE__, env)
+    GenServer.start_link(__MODULE__, env, name: __MODULE__)
   end
 
   ## Server
@@ -49,6 +68,19 @@ defmodule Sepomets.Db do
 
     file_path = Application.get_env(:sepomets, :file)
 
+    load(table, file_path)
+  end
+
+  @impl true
+  def handle_cast({:load, file_path}, state) do
+    load(@table, file_path)
+
+    {:noreply, state}
+  end
+
+  ## Helpers
+
+  defp load(table, file_path) do
     case Loader.load_file(table, file_path) do
       {:error, error} ->
         {:error, error}
@@ -60,8 +92,6 @@ defmodule Sepomets.Db do
         {:ok, :ok}
     end
   end
-
-  ## Helpers
 
   # Crea la tabla ETS
   @spec create_table() :: atom()
