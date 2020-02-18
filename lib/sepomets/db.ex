@@ -23,6 +23,14 @@ defmodule Sepomets.Db do
     end
   end
 
+  @doc """
+  Carga un archivo de Sepomex
+  """
+  @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
+  def load(file_path) do
+    Loader.load_file(@table, file_path)
+  end
+
   def start_link(env) do
     GenServer.start_link(__MODULE__, env)
   end

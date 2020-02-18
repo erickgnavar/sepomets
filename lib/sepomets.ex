@@ -11,7 +11,7 @@ defmodule Sepomets do
 
   ## Examples
 
-      Sepomets.get("03100")
+      iex> Sepomets.get("03100")
       [
         %Sepomets.PostalCodeData{
           city: %{code: "03", name: "Ciudad de México"},
@@ -36,4 +36,15 @@ defmodule Sepomets do
   """
   @spec get(String.t()) :: [PostalCodeData.t()]
   defdelegate get(postal_code), to: Db
+
+  @doc """
+  Carga un archivo ZIP nuevo de códigos postales de Sepomex.
+
+  ## Examples
+
+      iex> Sepomets.load("fake/path/sepomex.zip')
+      :ok
+  """
+  @spec load(String.t()) :: :ok | :file_not_found | {:error, String.t()}
+  defdelegate load(file_path), to: Db
 end
