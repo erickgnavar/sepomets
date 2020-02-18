@@ -3,27 +3,32 @@ defmodule Sepomets.Loader do
 
   require Logger
 
-  @defaut_file_path "files/sepomex.zip"
-
   @doc """
   Carga la información de Sepomex a la tabla ETS desde un archivo
   """
-  @spec load_file(atom()) :: :ok
-  def load_file(table) do
-    Logger.debug(fn -> "Start loading Sepomex data" end)
+  @spec load_file(atom(), String.t()) :: :ok
+  def load_file(_table, nil) do
+    not_found()
+  end
 
-    file_path = Application.get_env(:sepomets, :file, @defaut_file_path)
-
+  def load_file(table, file_path) do
     case extract_file(file_path) do
       {:ok, file_path} ->
+        Logger.debug(fn -> "Iniciando carga de Sepomex" end)
         load_file_data(table, file_path)
-        Logger.debug(fn -> "Finish loading Sepomex data" end)
+        Logger.debug(fn -> "Carga de Sepomex finalizada" end)
         File.rm!(file_path)
 
       _ ->
-        Logger.error("Sepomex data file not found")
-        {:error, :file_not_found}
+        not_found()
     end
+  end
+
+  # Loguea que el archivo de Sepomex no se ha encontrado
+  @spec not_found :: :file_not_found
+  defp not_found do
+    Logger.error("Archivo de Sepomex no encontrado")
+    :file_not_found
   end
 
   # Carga la información del archivo de Sepomex a la tabla ETS

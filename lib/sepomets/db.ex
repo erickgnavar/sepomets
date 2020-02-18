@@ -39,12 +39,17 @@ defmodule Sepomets.Db do
   def init(_) do
     table = create_table()
 
-    case Loader.load_file(table) do
+    file_path = Application.get_env(:sepomets, :file)
+
+    case Loader.load_file(table, file_path) do
       {:error, error} ->
         {:error, error}
 
+      :file_not_found ->
+        {:ok, :not_loaded}
+
       _ ->
-        {:ok, table}
+        {:ok, :ok}
     end
   end
 
